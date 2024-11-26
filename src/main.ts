@@ -81,6 +81,23 @@ app.get("/funcionarios", async (req, res) => {
     }
 })
 
+app.get("/consulta", async (req, res) => {
+    try {
+        const connection = await mysql.createConnection({
+            host: process.env.dbhost ? process.env.dbhost : "localhost",
+            user: process.env.dbuser ? process.env.dbuser : "root",
+            password: process.env.dbpassword ? process.env.dbpassword : "",
+            database: process.env.dbname ? process.env.dbname : "test",
+            port: process.env.dbport ? parseInt(process.env.dbport) : 3306
+        })
+        const [result, fields] = await connection.query("SELECT * from consulta")
+        await connection.end()
+        res.send(result)
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Server ERROR")
+    }
+})
 
 app.listen(8000, () => {
     console.log("Iniciei o servidor")
