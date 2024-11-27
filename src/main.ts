@@ -46,23 +46,6 @@ app.post("/produtos", async (req, res) => {
 })
 
 
-app.get("/usuarios", async (req, res) => {
-    try {
-        const connection = await mysql.createConnection({
-            host: process.env.dbhost ? process.env.dbhost : "localhost",
-            user: process.env.dbuser ? process.env.dbuser : "root",
-            password: process.env.dbpassword ? process.env.dbpassword : "",
-            database: process.env.dbname ? process.env.dbname : "teste",
-            port: process.env.dbport ? parseInt(process.env.dbport) : 3306
-        })
-        const [result, fields] = await connection.query("SELECT * from usuarios")
-        await connection.end()
-        res.send(result)
-    } catch (e) {
-        res.status(500).send("Server ERROR")
-    }
-})
-
 app.get("/funcionarios", async (req, res) => {
     try {
         const connection = await mysql.createConnection({
@@ -72,7 +55,7 @@ app.get("/funcionarios", async (req, res) => {
             database: process.env.dbname ? process.env.dbname : "test",
             port: process.env.dbport ? parseInt(process.env.dbport) : 3306
         })
-        const [result, fields] = await connection.query("SELECT * from funcionarios")
+        const [result, fields] = await connection.query("SELECT * from funcionario")
         await connection.end()
         res.send(result)
     } catch (e) {
