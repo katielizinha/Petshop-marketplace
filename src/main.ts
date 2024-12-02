@@ -6,7 +6,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-
 app.get("/produtos", async (req, res) => {
     try {
         const connection = await mysql.createConnection({
@@ -44,7 +43,6 @@ app.post("/produtos", async (req, res) => {
         res.status(500).send(e)
     }
 })
-
 
 app.get("/funcionarios", async (req, res) => {
     try {
@@ -138,6 +136,7 @@ app.post("/donos", async (req, res) => {
         res.status(500).send(e)
     }
 })
+
 app.listen(8000, () => {
     console.log("Iniciei o servidor")
 })
