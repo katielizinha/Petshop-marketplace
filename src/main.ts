@@ -23,6 +23,8 @@ app.get("/produtos", async (req, res) => {
         res.status(500).send("Server ERROR")
     }
 })
+
+
 app.post("/produtos", async (req, res) => {
     try {
         const connection = await mysql.createConnection({
@@ -32,10 +34,10 @@ app.post("/produtos", async (req, res) => {
             database: process.env.dbname ? process.env.dbname : "defaultdb",
             port: process.env.dbport ? parseInt(process.env.dbport) : 3306
         })
-        const {id,nome,descricao,preco,imagem} = req.body
+        const {id,nome,descricao,preco,data_producao,imagem} = req.body
         const [result, fields] = 
-                    await connection.query("INSERT INTO produtos VALUES (?,?,?,?,?)",
-                            [id,nome,descricao,preco,imagem])
+                    await connection.query("INSERT INTO produtos VALUES (?,?,?,?,?,?)",
+                            [id,nome,descricao,preco,data_producao,imagem])
         await connection.end()
         res.send(result)
     } catch (e) {
@@ -125,10 +127,10 @@ app.post("/donos", async (req, res) => {
             database: process.env.dbname ? process.env.dbname : "defaultdb",
             port: process.env.dbport ? parseInt(process.env.dbport) : 3306
         })
-        const {id,nomeDono,nomeAnimal,cpf,telefone,dataCadastro} = req.body
+        const {id,nomeDono,nomeAnimal,cpf,telefone,dataCadastro,imagem} = req.body
         const [result, fields] = 
-                    await connection.query("INSERT INTO donos VALUES (?,?,?,?,?,?)",
-                            [id,nomeDono,nomeAnimal,cpf,telefone,dataCadastro])
+                    await connection.query("INSERT INTO donos VALUES (?,?,?,?,?,?,?)",
+                            [id,nomeDono,nomeAnimal,cpf,telefone,dataCadastro,imagem])
         await connection.end()
         res.send(result)
     } catch (e) {
