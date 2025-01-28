@@ -44,5 +44,4 @@ class BancoMongo{
         return result
     }
 }
-
 export default BancoMongo
