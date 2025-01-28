@@ -48,14 +48,12 @@ class BancoMysql{
         const [result, fields] = await this.connection.query("SELECT * FROM produtos WHERE id = ?",[id]) as RowDataPacket[]
         return result[0]
     }
-
-
     async listarDonos() {
         if (!this.connection) throw new Error("Erro de conexão com o banco de dados.");
         const [result, fields] = await this.connection.query("SELECT * FROM donos");
         return result;
     }
-    
+
     async inserirDonos(dono: { id: number, nomeDono: string, nomeAnimal: string, CPF: string, telefone: string, dataCadastro: string, imagem: string }) {
         if (!this.connection) throw new Error("Erro de conexão com o banco de dados.");
         const [result, fields] = await this.connection.query(

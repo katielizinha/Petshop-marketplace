@@ -76,8 +76,6 @@ app.put("/produtos/:id",async(req,res)=>{
 })
 
 
-
-
 //Conexão Com a tabela donos 
 app.get("/donos", async (req, res) => {
     try {
@@ -124,15 +122,14 @@ app.delete("/donos/:id",async(req,res)=>{
     try{
         const banco = new BancoMysql()
         await banco.criarConexao()
-        const result = await banco.excluirDonos(req.params.id)
+        const result = await banco.excluir(req.params.id)
         await banco.finalizarConexao()
         res.status(200).send("Dono excluido com sucesso id: "+req.params.id)
     }
     catch(e){
         console.log(e)
-        res.status(500).send("Erro ao excluir dono")
-    }
-   
+        res.status(500).send("Erro ao excluir")
+    } 
 })
 
 //ALTERAR
@@ -144,6 +141,21 @@ app.put("/donos/:id",async(req,res)=>{
     const result = await banco.alterarDonos(req.params.id,donos)
     await banco.finalizarConexao()
     res.status(200).send("Dono alterado com sucesso id: "+req.params.id)
+})
+
+
+
+app.get("/animais", async (req, res) => {
+    try {
+        const banco = new BancoMysql()
+        await banco.criarConexao()
+        const result = await banco.listar()
+        await banco.finalizarConexao()
+        res.send(result)
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Server ERROR")
+    }
 })
 
 app.listen(8000, () => {
