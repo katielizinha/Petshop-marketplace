@@ -50,19 +50,19 @@ app.post("/produtos", async (req, res) => {
 })
 
 //DELETAR
-app.delete("/produtos/:id",async(req,res)=>{
-    try{
+app.delete("/produtos/:id", async (req, res) => {
+    try {
         const banco = new BancoMysql()
         await banco.criarConexao()
         const result = await banco.excluir(req.params.id)
         await banco.finalizarConexao()
-        res.status(200).send("Produto excluido com sucesso id: "+req.params.id)
-    }
-    catch(e){
+        res.status(200).send("Produto excluído com sucesso id: " + req.params.id)
+    } catch (e) {
         console.log(e)
         res.status(500).send("Erro ao excluir")
-    } 
+    }
 })
+
 
 //ALTERAR
 app.put("/produtos/:id",async(req,res)=>{
@@ -76,7 +76,7 @@ app.put("/produtos/:id",async(req,res)=>{
 })
 
 
-//Conexão Com a tabela donos 
+//Conexão Com a tabela donos
 app.get("/donos", async (req, res) => {
     try {
         const banco = new BancoMysql()
@@ -91,7 +91,7 @@ app.get("/donos", async (req, res) => {
 })
 app.get("/donos/:id", async (req, res) => {
     try {
-        
+       
         const banco = new BancoMysql()
         await banco.criarConexao()
         const result = await banco.listarPorIdDonos(req.params.id)
@@ -110,27 +110,26 @@ app.post("/donos", async (req, res) => {
         const donos = {id:parseInt(id),nomeDono,nomeAnimal,CPF,telefone,dataCadastro,imagem}
         const result = await banco.inserirDonos(donos)
         await banco.finalizarConexao()
-        res.send(result) 
+        res.send(result)
     } catch (e) {
         console.log(e)
         res.status(500).send(e)
     }
 })
 
-//DELETAR
-app.delete("/donos/:id",async(req,res)=>{
-    try{
-        const banco = new BancoMysql()
-        await banco.criarConexao()
-        const result = await banco.excluir(req.params.id)
-        await banco.finalizarConexao()
-        res.status(200).send("Dono excluido com sucesso id: "+req.params.id)
+
+app.delete("/donos/:id", async (req, res) => {
+    try {
+      const banco = new BancoMysql()
+      await banco.criarConexao()
+      const result = await banco.excluirDonos(req.params.id)
+      await banco.finalizarConexao()
+      res.status(200).send("Dono excluído com sucesso id: " + req.params.id)
+    } catch (e) {
+      console.log(e)
+      res.status(500).send("Erro ao excluir dono")
     }
-    catch(e){
-        console.log(e)
-        res.status(500).send("Erro ao excluir")
-    } 
-})
+  })
 
 //ALTERAR
 app.put("/donos/:id",async(req,res)=>{
@@ -144,21 +143,6 @@ app.put("/donos/:id",async(req,res)=>{
 })
 
 
-
-app.get("/animais", async (req, res) => {
-    try {
-        const banco = new BancoMysql()
-        await banco.criarConexao()
-        const result = await banco.listar()
-        await banco.finalizarConexao()
-        res.send(result)
-    } catch (e) {
-        console.log(e)
-        res.status(500).send("Server ERROR")
-    }
-})
-
 app.listen(8000, () => {
     console.log("Iniciei o servidor")
 })
-
