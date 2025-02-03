@@ -201,6 +201,36 @@ app.post("/funcionario", async (req, res) => {
     }
 })
 
+//Animais
+app.get("/animal", async (req, res) => {
+    try {
+        const banco = new BancoMysql()
+        await banco.criarConexao()
+        const result = await banco.listarAnimal()
+        await banco.finalizarConexao()
+        res.send(result)
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Server ERROR")
+    }
+})
+
+app.post("/animal", async (req, res) => {
+    try {
+        const {id,nomeAnimal,peso,idade,raca,consultaRealizada,imagem} = req.body
+        const banco = new BancoMysql()
+        await banco.criarConexao()
+        const animal = {id:parseInt(id),nomeAnimal,peso,idade,raca,consultaRealizada,imagem}
+        const result = await banco.inserirAnimal(animal)
+        await banco.finalizarConexao()
+        res.send(result) 
+    } catch (e) {
+        console.log(e)
+        res.status(500).send(e)
+    }
+})
+
+
 app.listen(8000, () => {
     console.log("Iniciei o servidor")
 })
