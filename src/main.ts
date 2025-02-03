@@ -142,6 +142,8 @@ app.put("/donos/:id",async(req,res)=>{
     res.status(200).send("Dono alterado com sucesso id: "+req.params.id)
 })
 
+
+//Consulta
 app.get("/consulta", async (req, res) => {
     try {
         const banco = new BancoMysql()
@@ -169,6 +171,38 @@ app.post("/consulta", async (req, res) => {
         res.status(500).send(e)
     }
 })
+
+//Funcionario
+app.get("/funcionario", async (req, res) => {
+    try {
+        const banco = new BancoMysql()
+        await banco.criarConexao()
+        const result = await banco.listarFuncionario()
+        await banco.finalizarConexao()
+        res.send(result)
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Server ERROR")
+    }
+})
+
+app.post("/funcionario", async (req, res) => {
+    try {
+        const {id,nomeFuncionario,areaEspecializacao,email,telefone,imagem} = req.body
+        const banco = new BancoMysql()
+        await banco.criarConexao()
+        const funcionario = {id:parseInt(id),nomeFuncionario,areaEspecializacao,email,telefone,imagem}
+        const result = await banco.inserirFuncionario(funcionario)
+        await banco.finalizarConexao()
+        res.send(result) 
+    } catch (e) {
+        console.log(e)
+        res.status(500).send(e)
+    }
+})
+
 app.listen(8000, () => {
     console.log("Iniciei o servidor")
 })
+
+

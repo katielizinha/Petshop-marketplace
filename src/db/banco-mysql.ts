@@ -91,6 +91,16 @@ class BancoMysql{
         const [result, fields] = await this.connection.query("INSERT INTO consulta VALUES (?,?,?,?,?)",[consulta.id,consulta.dataConsulta,consulta.nomePaciente,consulta.tipoConsulta,consulta.veterinario])
         return result
     }
+    async listarFuncionario(){
+        if(!this.connection) throw new Error("Erro de conexão com o banco de dados.")
+        const [result, fields] = await this.connection.query("SELECT * FROM funcionario")
+        return result
+    }
+    async inserirFuncionario(funcionario:{id:number,nomeFuncionario:string,areaEspecializacao:string,email:string,telefone:string,imagem:string}){
+        if(!this.connection) throw new Error("Erro de conexão com o banco de dados.")
+        const [result, fields] = await this.connection.query("INSERT INTO funcionario VALUES (?,?,?,?,?,?)",[funcionario.id,funcionario.nomeFuncionario,funcionario.areaEspecializacao,funcionario.email,funcionario.telefone, funcionario.imagem])
+        return result
+    }
 
 }
 
