@@ -173,7 +173,7 @@ app.post("/consulta", async (req, res) => {
 })
 
 //Funcionario
-app.get("/funcionario", async (req, res) => {
+app.get("/funcionarios", async (req, res) => {
     try {
         const banco = new BancoMysql()
         await banco.criarConexao()
@@ -186,7 +186,7 @@ app.get("/funcionario", async (req, res) => {
     }
 })
 
-app.post("/funcionario", async (req, res) => {
+app.post("/funcionarios", async (req, res) => {
     try {
         const {id,nomeFuncionario,areaEspecializacao,email,telefone,imagem} = req.body
         const banco = new BancoMysql()
@@ -202,7 +202,7 @@ app.post("/funcionario", async (req, res) => {
 })
 
 //Animais
-app.get("/animal", async (req, res) => {
+app.get("/animais", async (req, res) => {
     try {
         const banco = new BancoMysql()
         await banco.criarConexao()
@@ -215,7 +215,7 @@ app.get("/animal", async (req, res) => {
     }
 })
 
-app.post("/animal", async (req, res) => {
+app.post("/animais", async (req, res) => {
     try {
         const {id,nomeAnimal,peso,idade,raca,consultaRealizada,imagem} = req.body
         const banco = new BancoMysql()
